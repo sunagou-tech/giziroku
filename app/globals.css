@@ -862,6 +862,42 @@ label {
   margin-top: 18px;
 }
 
+.google-sync-panel {
+  margin-top: 18px;
+}
+
+.compact-button {
+  min-height: 38px;
+}
+
+.google-event-list {
+  display: grid;
+  gap: 10px;
+}
+
+.google-event-row {
+  display: grid;
+  gap: 3px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.google-event-row:hover {
+  border-color: var(--accent);
+}
+
+.google-event-row span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.google-event-row strong {
+  color: var(--text);
+}
+
 .calendar-note {
   margin: -4px 0 14px;
   color: var(--muted);

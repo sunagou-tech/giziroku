@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AppShell, PageHeader } from "@/app/components/AppShell";
 import { CompletableTaskList } from "@/app/components/CompletableTaskList";
+import { GoogleCalendarSync } from "@/app/components/GoogleCalendarSync";
 import { MeetingCard } from "@/app/components/MeetingCard";
 import { allTasks, meetings } from "@/lib/data";
 
@@ -63,6 +64,8 @@ export default function DashboardPage() {
           <CompletableTaskList tasks={urgentTasks} />
         </section>
       </div>
+
+      <GoogleCalendarSync />
 
       <section className="panel calendar-panel">
         <div className="section-heading">
