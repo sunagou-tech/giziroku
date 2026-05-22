@@ -25,16 +25,18 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ connected: false, events: [] });
     }
 
-    const now = new Date();
-    const thirtyDaysLater = new Date(now);
-    thirtyDaysLater.setDate(now.getDate() + 30);
+    const rangeStart = new Date();
+    rangeStart.setDate(rangeStart.getDate() - 7);
+    rangeStart.setHours(0, 0, 0, 0);
+    const rangeEnd = new Date();
+    rangeEnd.setDate(rangeEnd.getDate() + 60);
 
     const url = new URL("https://www.googleapis.com/calendar/v3/calendars/primary/events");
     url.searchParams.set("singleEvents", "true");
     url.searchParams.set("orderBy", "startTime");
-    url.searchParams.set("timeMin", now.toISOString());
-    url.searchParams.set("timeMax", thirtyDaysLater.toISOString());
-    url.searchParams.set("maxResults", "10");
+    url.searchParams.set("timeMin", rangeStart.toISOString());
+    url.searchParams.set("timeMax", rangeEnd.toISOString());
+    url.searchParams.set("maxResults", "50");
 
     const calendarResponse = await fetch(url, {
       headers: {

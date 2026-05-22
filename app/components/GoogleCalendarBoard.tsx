@@ -46,9 +46,9 @@ export function GoogleCalendarBoard() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const weekDays = useMemo(() => {
+  const visibleDays = useMemo(() => {
     const base = startOfWeek(new Date());
-    return Array.from({ length: 7 }, (_, index) => {
+    return Array.from({ length: 14 }, (_, index) => {
       const date = new Date(base);
       date.setDate(base.getDate() + index);
       return date;
@@ -111,7 +111,7 @@ export function GoogleCalendarBoard() {
 
   return (
     <div className="app-calendar">
-      {weekDays.map((day) => {
+      {visibleDays.map((day) => {
         const key = getDateKey(day);
         const dayEvents = eventsByDay[key] ?? [];
 
