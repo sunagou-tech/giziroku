@@ -1,12 +1,9 @@
 import Link from "next/link";
 import { AppShell, PageHeader } from "@/app/components/AppShell";
 import { CompletableTaskList } from "@/app/components/CompletableTaskList";
-import { GoogleCalendarSync } from "@/app/components/GoogleCalendarSync";
+import { GoogleCalendarBoard } from "@/app/components/GoogleCalendarBoard";
 import { MeetingCard } from "@/app/components/MeetingCard";
 import { allTasks, meetings } from "@/lib/data";
-
-const googleCalendarEmbedUrl =
-  "https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Asia%2FTokyo&showPrint=0&showCalendars=0&showTz=0&mode=WEEK&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%230B8043";
 
 export default function DashboardPage() {
   const nextMeetings = meetings.slice(0, 2);
@@ -65,23 +62,17 @@ export default function DashboardPage() {
         </section>
       </div>
 
-      <GoogleCalendarSync />
-
       <section className="panel calendar-panel">
         <div className="section-heading">
           <h2>会議カレンダー</h2>
-          <Link href="/meetings/new">会議を登録</Link>
+          <a className="secondary-button compact-button" href="/api/google/auth">
+            Google連携
+          </a>
         </div>
         <p className="calendar-note">
-          直近の会議カードには、Googleカレンダーとの連携状態を表示しています。
+          Googleカレンダーと同期した予定をこのカレンダーに表示します。
         </p>
-        <div className="calendar-frame">
-          <iframe
-            title="Google カレンダー"
-            src={googleCalendarEmbedUrl}
-            loading="lazy"
-          />
-        </div>
+        <GoogleCalendarBoard />
       </section>
     </AppShell>
   );
