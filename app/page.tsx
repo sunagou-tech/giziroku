@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AppShell, PageHeader } from "@/app/components/AppShell";
 import { CompletableTaskList } from "@/app/components/CompletableTaskList";
 import { GoogleCalendarBoard } from "@/app/components/GoogleCalendarBoard";
+import { GoogleMeetingCards } from "@/app/components/GoogleMeetingCards";
 import { MeetingCard } from "@/app/components/MeetingCard";
 import { allTasks, meetings } from "@/lib/data";
 
@@ -47,6 +48,7 @@ export default function DashboardPage() {
             <Link href="/meetings">すべて見る</Link>
           </div>
           <div className="stack">
+            <GoogleMeetingCards />
             {nextMeetings.map((meeting) => (
               <MeetingCard meeting={meeting} key={meeting.id} />
             ))}
