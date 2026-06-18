@@ -340,6 +340,15 @@ textarea {
   color: var(--muted);
 }
 
+.meeting-sync-state {
+  justify-content: center;
+  min-height: 180px;
+}
+
+.meeting-sync-state > strong {
+  font-size: 17px;
+}
+
 .tag {
   padding: 4px 9px;
   border-radius: 999px;

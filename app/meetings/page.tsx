@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { AppShell, PageHeader } from "@/app/components/AppShell";
-import { MeetingCard } from "@/app/components/MeetingCard";
-import { meetings } from "@/lib/data";
+import { GoogleMeetingCards } from "@/app/components/GoogleMeetingCards";
 
 export default function MeetingsPage() {
   return (
     <AppShell>
       <PageHeader
         title="会議一覧"
-        description="文字起こし済みの会議を、日時・参加者・アクション数から探せます。"
+        description="Googleカレンダーと同期した会議を、日時・参加者から確認できます。"
         action={<Link className="primary-button" href="/meetings/new">新規会議</Link>}
       />
       <section className="toolbar" aria-label="会議検索">
@@ -20,9 +19,7 @@ export default function MeetingsPage() {
         </select>
       </section>
       <section className="meeting-grid">
-        {meetings.map((meeting) => (
-          <MeetingCard meeting={meeting} key={meeting.id} />
-        ))}
+        <GoogleMeetingCards limit={50} />
       </section>
     </AppShell>
   );

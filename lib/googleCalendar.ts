@@ -2,6 +2,13 @@ export type GoogleCalendarEvent = {
   id: string;
   summary: string;
   htmlLink: string;
+  description?: string;
+  location?: string;
+  attendees?: Array<{
+    email: string;
+    displayName?: string;
+    responseStatus?: string;
+  }>;
   start: {
     date?: string;
     dateTime?: string;

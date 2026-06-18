@@ -40,9 +40,10 @@ function formatTime(event: GoogleCalendarEvent) {
   }).format(start);
 }
 
-export function GoogleMeetingCards() {
+export function GoogleMeetingCards({ limit = 3 }: { limit?: number }) {
   const [events, setEvents] = useState<GoogleCalendarEvent[]>([]);
   const [isConnected, setIsConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadEvents() {
@@ -57,19 +58,44 @@ export function GoogleMeetingCards() {
         setEvents(data.events ?? []);
       } catch {
         setEvents([]);
+      } finally {
+        setIsLoading(false);
       }
     }
 
     loadEvents();
   }, []);
 
-  if (!isConnected || events.length === 0) {
-    return null;
+  if (isLoading) {
+    return (
+      <article className="meeting-card meeting-sync-state">
+        <strong>Googleカレンダーを同期しています</strong>
+      </article>
+    );
+  }
+
+  if (!isConnected) {
+    return (
+      <article className="meeting-card meeting-sync-state">
+        <strong>Googleカレンダーと連携してください</strong>
+        <p>連携すると、Googleカレンダーの予定がここに表示されます。</p>
+        <a className="primary-button" href="/api/google/auth">Google連携</a>
+      </article>
+    );
+  }
+
+  if (events.length === 0) {
+    return (
+      <article className="meeting-card meeting-sync-state">
+        <strong>表示できる予定がありません</strong>
+        <p>Googleカレンダーに予定を追加すると自動で表示されます。</p>
+      </article>
+    );
   }
 
   return (
     <>
-      {events.slice(0, 3).map((event) => (
+      {events.slice(0, limit).map((event) => (
         <article className="meeting-card google-meeting-card" key={event.id}>
           <div className="card-topline">
             <span>{formatDate(event)} {formatTime(event)}</span>
@@ -78,12 +104,12 @@ export function GoogleMeetingCards() {
           <a href={event.htmlLink} target="_blank" rel="noreferrer" className="card-title">
             {event.summary ?? "無題の予定"}
           </a>
-          <p>Googleカレンダーから同期された予定です。会議開始時にこのカードから録音できます。</p>
+          <p>{event.description ?? event.location ?? "Googleカレンダーから同期された予定です。会議開始時にこのカードから録音できます。"}</p>
           <div className="tag-row">
             <span className="calendar-badge synced">Googleカレンダー連携済み</span>
           </div>
           <div className="card-footer">
-            <span>同期予定</span>
+            <span>{event.attendees?.length ? `${event.attendees.length}名参加` : "同期予定"}</span>
             <span>アクション未作成</span>
           </div>
           <QuickRecordButton meetingTitle={event.summary ?? "Googleカレンダー予定"} />
